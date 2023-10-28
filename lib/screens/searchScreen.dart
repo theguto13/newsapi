@@ -153,6 +153,8 @@ class _SearchScreenState extends State<SearchScreen> {
               ElevatedButton(
                 onPressed: () {
                   final query = searchController.text;
+                  final keywords = query.split(' ');
+                  final formattedQuery = keywords.join('+');
                   final from = fromController.text;
                   final to = toController.text;
                   String searchInValue =
@@ -160,7 +162,7 @@ class _SearchScreenState extends State<SearchScreen> {
                   String languageValue =
                       languageOptions[selectedLanguage] ?? '';
                   String sortByValue = sortByOptions[selectedSortBy] ?? '';
-                  if (query.isEmpty) {
+                  if (formattedQuery.isEmpty) {
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
                         content:
@@ -171,7 +173,7 @@ class _SearchScreenState extends State<SearchScreen> {
                     final apiKey = '476a48c286f14061bfa0758463c6b226';
                     final baseUrl =
                         'https://newsapi.org/v2/everything?apiKey=$apiKey';
-                    String url = '$baseUrl&q=$query';
+                    String url = '$baseUrl&q=$formattedQuery';
 
                     if (from.isNotEmpty) {
                       url += '&from=$from';

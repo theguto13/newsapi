@@ -194,7 +194,7 @@ class _SearchScreenState extends State<SearchScreen> {
                     if (sortByValue.isNotEmpty) {
                       url += '&sortBy=$sortByValue';
                     }
-
+                    
                     Navigator.push(
                       context,
                       MaterialPageRoute(

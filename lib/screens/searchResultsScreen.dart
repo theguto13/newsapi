@@ -76,23 +76,41 @@ class _SearchResultsScreenState extends State<SearchResultsScreen> {
         centerTitle: true,
         backgroundColor: Color(0xFF8A2BE2),
       ),
-      body: ListView.builder(
-        controller: scrollController,
-        itemCount: articles.length,
-        itemBuilder: (context, index) {
-          final article = articles[index];
-          return InkWell(
-            onTap: () {
-              openArticleDescription(article);
+      body: Stack(
+        children: [
+          ListView.builder(
+            controller: scrollController,
+            itemCount: articles.length,
+            itemBuilder: (context, index) {
+              final article = articles[index];
+              return InkWell(
+                onTap: () {
+                  openArticleDescription(article);
+                },
+                child: Card(
+                  child: ListTile(
+                    title: Text(article.title),
+                    subtitle: Text(article.description),
+                  ),
+                ),
+              );
             },
-            child: Card(
-              child: ListTile(
-                title: Text(article.title),
-                subtitle: Text(article.description),
+          ),
+          if (isLoading)
+            Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  CircularProgressIndicator(
+                    valueColor:
+                        AlwaysStoppedAnimation<Color>(Color(0xFF8A2BE2)),
+                  ),
+                  SizedBox(height: 16),
+                  Text("Pesquisando"),
+                ],
               ),
             ),
-          );
-        },
+        ],
       ),
     );
   }
